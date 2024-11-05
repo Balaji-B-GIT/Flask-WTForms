@@ -1,7 +1,8 @@
 from flask import Flask, render_template
 from flask_wtf import FlaskForm
 from wtforms import StringField,SubmitField,PasswordField
-from wtforms.validators import DataRequired,Email,Length
+from wtforms.validators import Email,Length
+from flask_bootstrap import Bootstrap5
 '''
 To Create a requirements.txt 
 $ pip install pipreqs
@@ -31,8 +32,8 @@ class MyForm(FlaskForm):
     submit = SubmitField('submit')
 
 
-
 app = Flask(__name__)
+bootstrap = Bootstrap5(app)
 app.secret_key = "any-string-you-want-just-keep-it-secret"
 
 @app.route("/")
