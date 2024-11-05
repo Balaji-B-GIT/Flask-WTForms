@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_wtf import FlaskForm
 from wtforms import StringField,SubmitField,PasswordField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired,Email,Length
 '''
 To Create a requirements.txt 
 $ pip install pipreqs
@@ -22,11 +22,12 @@ pip3 install -r requirements.txt
 
 This will install the packages from requirements.txt for this project.
 '''
-
+valid_email = "admin@email.com"
+valid_pw = "12345678"
 
 class MyForm(FlaskForm):
-    email = StringField('email',validators=[DataRequired()])
-    password = PasswordField('password',validators=[DataRequired()])
+    email = StringField('email',validators=[Email()])
+    password = PasswordField('password',validators=[Length(min=8, max=20)])
     submit = SubmitField('submit')
 
 
@@ -42,6 +43,11 @@ def home():
 @app.route("/login",methods=["POST","GET"])
 def login():
     form = MyForm()
+    if form.validate_on_submit():
+        if form.email.data == valid_email and form.password.data == valid_pw:
+            return render_template('success.html')
+        else:
+            return render_template('denied.html')
     return render_template('login.html', form = form)
 
 if __name__ == '__main__':

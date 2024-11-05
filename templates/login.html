@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 	<head>
 		<title>Login</title>
 	</head>
@@ -8,10 +8,20 @@
         <div class="container">
 		<h1>Login</h1>
         <!-- This is where our form will go. -->
-		<form method="POST" action="{{ url_from('login') }}">
+		<form method="POST" action="{{ url_for('login') }}">
 			{{ form.csrf_token }}
-			{{ form.email.label }} {{ form.email(size=30) }}
-			{{ form.password.label }} {{ form.password(size=30) }}
+			<p>
+			{{ form.email.label }}<br>{{ form.email(size=30) }}
+			{% for err in form.email.errors %}
+				<span style="color:red" >{{err}}</span><br>
+			{% endfor %}
+			</p>
+			<p>
+			{{ form.password.label }}<br>{{ form.password(size=30) }}
+			{% for err in form.password.errors %}
+				<span style="color:red" >{{err}}</span><br>
+			{% endfor %}
+			</p>
 			{{ form.submit }}
 		</form>
         </div>
